@@ -1,3 +1,4 @@
+
 /** 
  * MIT License
  *
@@ -27,7 +28,6 @@
  * Utilização do Copilot para geração de documentação da classes.  
  */
 
-
 /**
  * Representa um gerente da empresa.
  * <p>
@@ -35,13 +35,14 @@
  * com base em projetos alocados e finalizados em um intervalo de tempo específico.
  * </p>
  */
+import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 
 public class Gerente extends Funcionario {
 
 	private static final double SALARIO_GERENTE = 8060;
-	private static final double BONUS_PROJETO = 8.0/100;
+	private static final double BONUS_PROJETO = 8.0 / 100;
 	private static final int TEMPO_BONUS = 90;
 	private List<Projeto> projetos;
 
@@ -49,7 +50,7 @@ public class Gerente extends Funcionario {
 	 * Cria um novo gerente.
 	 *
 	 * @param nome nome do gerente
-	 * @param CPF CPF do gerente
+	 * @param CPF  CPF do gerente
 	 */
 	public Gerente(String nome, String CPF) {
 		super(nome, CPF);
@@ -63,19 +64,39 @@ public class Gerente extends Funcionario {
 	 * @return valor total do bônus
 	 */
 	private double valorBonus() {
-		//TODO
-		return 0;
+		int totalProjetos = projetos.size();
+		int projetosFinalizados = 0;
+
+		double bonus = 0;
+
+		for (int i = 0; i < totalProjetos; i++) {
+			Projeto projeto = projetos.get(i);
+
+			if (projeto.diasAposFinalizacao() <= TEMPO_BONUS) {
+				projetosFinalizados++;
+			}
+		}
+
+		bonus = BONUS_PROJETO * projetosFinalizados;
+		return bonus;
 	}
 
 	/**
 	 * Aloca um novo projeto ao gerente, segundo as regras da empresa.
 	 *
 	 * @param projeto projeto a ser alocado
-	 * @return código de resultado da operação
 	 */
 	public int alocarProjeto(Projeto projeto) {
-		//TODO
-		return 0;
+		int qntdProjetos = projetos.size();
+		boolean podeAlocar = true;
+		int NAO_PODE = -1;
+
+		for (Projeto p : projetos) {
+			if (p.diasAposFinalizacao() == -1)
+				podeAlocar = false;
+		}
+
+		return (podeAlocar) ? qntdProjetos : NAO_PODE;
 	}
 
 	/**
@@ -89,12 +110,13 @@ public class Gerente extends Funcionario {
 	}
 
 	/**
-	 * Retorna uma descrição textual do gerente, incluindo quantidade de projetos alocados.
+	 * Retorna uma descrição textual do gerente, incluindo quantidade de projetos
+	 * alocados.
 	 *
 	 * @return descrição textual do gerente
 	 */
-	@Override 
+	@Override
 	public String toString() {
-		return "GERENTE "+ super.toString() + " - " +projetos.size() + " projetos alocados."; 
+		return "GERENTE " + super.toString() + " - " + projetos.size() + " projetos alocados.";
 	}
 }

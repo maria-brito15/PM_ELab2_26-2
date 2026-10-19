@@ -34,7 +34,8 @@ import java.time.temporal.ChronoUnit;
 /**
  * Representa um projeto com data de início, possível data de término e nome.
  * <p>
- * O projeto pode ser finalizado e permite consultar há quantos dias foi finalizado.
+ * O projeto pode ser finalizado e permite consultar há quantos dias foi
+ * finalizado.
  * </p>
  */
 public class Projeto {
@@ -50,14 +51,16 @@ public class Projeto {
 	 * Se o nome for vazio, utiliza o nome padrão {@code "Projeto"}.
 	 * </p>
 	 *
-	 * @param nome nome do projeto
+	 * @param nome       nome do projeto
 	 * @param dataInicio data de início do projeto
 	 */
 	public Projeto(String nome, LocalDate dataInicio) {
-		if(dataInicio == null)
+		if (dataInicio == null)
 			dataInicio = LocalDate.now();
-		if(nome.length() == 0)
+
+		if (nome.length() == 0)
 			nome = "Projeto";
+
 		iniciadoEm = dataInicio;
 		this.nome = nome;
 	}
@@ -69,17 +72,18 @@ public class Projeto {
 	 */
 	public int finalizar() {
 		finalizadoEm = LocalDate.now();
-		return (int)iniciadoEm.until(finalizadoEm, ChronoUnit.DAYS);
+		return (int) iniciadoEm.until(finalizadoEm, ChronoUnit.DAYS);
 	}
 
 	/**
 	 * Informa há quantos dias o projeto foi finalizado.
 	 *
-	 * @return quantidade de dias desde a finalização, ou {@code -1} se o projeto ainda não foi finalizado
+	 * @return quantidade de dias desde a finalização, ou {@code -1} se o projeto
+	 *         ainda não foi finalizado
 	 */
 	public int diasAposFinalizacao() {
-		//TODO
-		return 0;
+		LocalDate hoje = LocalDate.now();
+		return (int) finalizadoEm.until(hoje, ChronoUnit.DAYS);
 	}
 
 	/**
@@ -87,8 +91,8 @@ public class Projeto {
 	 *
 	 * @return descrição textual do projeto
 	 */
-	@Override 
-	public String toString(){
+	@Override
+	public String toString() {
 		DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/uuuu");
 		String inicio = formatador.format(iniciadoEm);
 		String fim = finalizadoEm == null ? "(não terminado)." : formatador.format(finalizadoEm);

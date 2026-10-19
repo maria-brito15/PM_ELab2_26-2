@@ -37,7 +37,7 @@
 public class Analista extends Funcionario {
 
 	private static final double SALARIO_ANALISTA = 4836;
-	private static final double FRACAO_HORA = 1.0/90;
+	private static final double FRACAO_HORA = 1.0 / 90;
 	private static final int MAX_HORAS_EXTRAS = 40;
 	private double horasExtras;
 
@@ -45,11 +45,11 @@ public class Analista extends Funcionario {
 	 * Cria um novo analista.
 	 *
 	 * @param nome nome do analista
-	 * @param CPF CPF do analista
+	 * @param CPF  CPF do analista
 	 */
 	public Analista(String nome, String CPF) {
 		super(nome, CPF);
-		
+
 	}
 
 	/**
@@ -58,8 +58,20 @@ public class Analista extends Funcionario {
 	 * @return valor das horas extras
 	 */
 	private double valorHorasExtras() {
-		//TODO
-		return 0;
+		double constantePagamento = FRACAO_HORA * SALARIO_ANALISTA;
+		double valor = 0;
+		int contHoras = 0;
+
+		for (int i = 0; i < this.horasExtras; i++) {
+			if (contHoras <= MAX_HORAS_EXTRAS) {
+				valor += constantePagamento;
+				contHoras++;
+			} else {
+				break;
+			}
+		}
+
+		return valor;
 	}
 
 	/**
@@ -69,19 +81,24 @@ public class Analista extends Funcionario {
 	 * @return total de horas extras acumuladas após a atualização
 	 */
 	public double addHorasExtras(double quantidade) {
-		if(quantidade > 0 && horasExtras < MAX_HORAS_EXTRAS)
+		if (quantidade > 0 && horasExtras < MAX_HORAS_EXTRAS)
 			horasExtras += quantidade;
+
 		return horasExtras;
 	}
 
 	/**
-	 * Registra o pagamento do analista, somando salário base e horas extras 
+	 * Registra o pagamento do analista, somando salário base e horas extras
 	 * e obedecendo as regras da empresa.
+	 * 
 	 * @return valor total pago ao analista
 	 */
 	public double registrarPagamento() {
-		//TODO
-		return 0;
+		double pagamento = SALARIO_ANALISTA + valorHorasExtras();
+		this.ultimoSalario = pagamento;
+		this.horasExtras = 0;
+
+		return pagamento;
 	}
 
 	/**
@@ -89,9 +106,9 @@ public class Analista extends Funcionario {
 	 *
 	 * @return descrição textual do analista
 	 */
-	@Override 	
+	@Override
 	public String toString() {
-		return "ANALISTA "+ super.toString();
+		return "ANALISTA " + super.toString();
 	}
 
 }
